@@ -1,6 +1,6 @@
 {
   "name": "saucenao",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "saucenao api wrapper",
   "main": "index.js",
   "scripts": {
