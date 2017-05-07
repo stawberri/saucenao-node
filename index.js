@@ -4,12 +4,13 @@ const stream = require('stream')
 const querystring = require('querystring')
 
 const FormData = require('form-data')
+const fileType = require('file-type')
 
 exports = module.exports = fnProto(function SauceNAO(...args) {
   let api_key
   if(new.target) {
     api_key = args[0]
-    if(typeof api_key !== 'string')
+    if(!api_key || typeof api_key !== 'string')
       throw new TypeError('no api_key passed to constructor')
     return fnProto(getSauce)
   } else return getSauce(...args)
@@ -32,6 +33,14 @@ exports = module.exports = fnProto(function SauceNAO(...args) {
 
       case (input instanceof stream.Readable):
         form.append('file', input)
+      break
+
+      case (input instanceof Buffer):
+        let inputType = fileType(input)
+        form.append('file', input, {
+          filename: `file.${inputType.ext}`,
+          contentType: inputType.mime
+        })
       break
 
       default: throw new TypeError('unrecognized input format')

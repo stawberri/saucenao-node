@@ -12,7 +12,7 @@ let sauce = (await SauceNAO('picture.png')).json
 ```
 
 ## SauceNAO(input[, options])
-* `input` *string or object.* An image url, filename, or `fs` input stream.
+* `input` *string or object.* An image url, filename, `Buffer`, or `fs` readable stream.
 * `options` *object.* Any extra parameters you would like to pass in the request body.
 * **Returns** *Promise.*
   * **Resolves** *Response.* A Node.js `IncomingMessage` with extra properties.
@@ -22,25 +22,23 @@ let sauce = (await SauceNAO('picture.png')).json
     * `response` *Response.* If the error happened after the response was received (most likely because of a JSON parse error), the `IncomingMessage` that the promise resolves to will still be available here.  
     It is likely that `response.json` will not have been defined yet, but you may be able to print out `response.body` to figure out what went wrong.
 
-This function is fairly simple.
+This function is fairly simple. It mostly just performs a request to SauceNAO for you, so that you can skip a couple function calls. It can work with local filepaths, urls that begin with `http://` or `https://`, `fs` input streams, or even buffers.
 
-If you provide a filename or a `fs` input stream as an input, it'll read your file for you so that you don't have to. If you instead pass it a url, it'll set the `url` parameter with it.
-
-Then it'll send a request for you and attempt to parse the JSON in SauceNAO's response. It'll give you a promise that resolves to the HTTP response, with these values available as properties. If anything goes wrong, it'll reject an error with a `response` property so you can debug.
+After it receives a reply from SauceNAO, it'll attempt to parse it as JSON and add it to the Response object for your convenience. It'll return a promise that either resolves to this extended Response object or rejects an error containing as much of this extended Response object as it generated.
 
 
 ## new SauceNAO(api_key)
-If you have [an api key](https://saucenao.com/user.php?page=search-api), you can specify it by passing it to SauceNAO's "constructor." This gives you a new function that works exactly the same way as the function above, but your requests will be authenticated.
+If you have [an api key](https://saucenao.com/user.php?page=search-api), you can specify it by using this function like a constructor. This gives you a new function that works exactly the same way as the function above, but your requests will be authenticated.
 
 ```js
 const SauceNAO = require('saucenao')
-let mysauce = new SauceNAO('api_key here')
+let mySauce = new SauceNAO('api_key here')
 
-mysauce('picture.png').then((response) => {
-  console.log('Request successful:')
+mySauce(imageDataBuffer).then((response) => {
+  console.log('Request successful')
   console.dir(response.json)
 }, (error) => {
-  console.log('Request encountered an error:')
+  console.error('Request encountered an error')
   console.dir(error.request)
 })
 ```
