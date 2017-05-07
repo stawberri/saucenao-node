@@ -1,0 +1,29 @@
+{
+  "name": "saucenao",
+  "version": "0.0.0",
+  "description": "saucenao api wrapper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://stawberri@github.com/stawberri/saucenao-node.git"
+  },
+  "keywords": [
+    "saucenao",
+    "anime",
+    "image",
+    "source",
+    "sauce"
+  ],
+  "author": "Pudding <aideen@aideen.pw> (https://aideen.pw/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stawberri/saucenao-node/issues"
+  },
+  "homepage": "https://github.com/stawberri/saucenao-node#readme",
+  "dependencies": {
+    "form-data": "^2.1.4"
+  }
+}
