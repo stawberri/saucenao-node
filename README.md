@@ -2,6 +2,7 @@
 saucenao api wrapper
 
 [![NPM](https://nodei.co/npm/saucenao.png?mini=true)](https://nodei.co/npm/saucenao/)
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 This package is an api wrapper for SauceNAO.
 
